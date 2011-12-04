@@ -57,6 +57,8 @@ def logout(request):
     django.contrib.auth.logout(request)
     
     t = loader.get_template('logout.html')
-    c = RequestContext(request, {})
+    c = RequestContext(request, {
+                                 'redirect_url' : '/'
+                                })
     return HttpResponse(t.render(c))
 

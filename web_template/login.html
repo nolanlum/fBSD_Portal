@@ -9,9 +9,17 @@
 	<h2>Choose an authentication method:</h2>
 	<ul id="auth">
 	{% for x in auths %}
-		<li><a href="/login/{{ x }}"><img src="{{ STATIC_URL }}{{ x }}.png" alt="{{ x|capfirst }}" /></a></li>
+		<li><a href="/login/{{ x }}"
+				onmouseover="document.getElementById('login-method').innerHTML='{{ x|capfirst }}'"
+				onmouseout="document.getElementById('login-method').innerHTML=''">
+			<img src="{{ STATIC_URL }}{{ x }}.png" alt="{{ x|capfirst }}" />
+			</a>
+		</li>
 	{% endfor %}
 	</ul>
+	<p>
+		<span id="login-method"></span>
+	</p>
 </div>
 
 {% endblock %}

@@ -56,3 +56,11 @@ ul#auth li {
 	display: inline;
 	padding-right: 3px;
 }
+
+ul#auth li a {
+	text-decoration: none;
+}
+
+#login-method {
+	font-weight: bold;
+}
