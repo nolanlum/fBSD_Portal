@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}FreeBSD Community Portal :: Logged out{% endblock %}
+
+{% block head %}
+<meta http-equiv="refresh" content="5; url={{ redirect_url }}" />
+{% endblock %}
+
+{% block content %}
+
+<div class="centerbox">
+	<h2>Logged Out</h2>
+	<p>
+		You have successfully logged out.<br /><br />
+		
+		Redirecting you to the front page in 5 seconds...<br />
+		<a href="{{ redirect_url }}">Click to go there now</a>
+	</p>
+</div>
+{% endblock %}

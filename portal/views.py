@@ -28,6 +28,7 @@ from django.http import HttpResponse, HttpResponseRedirect
 from django.views.decorators.http import require_http_methods
 from django.contrib.auth.decorators import login_required
 from social_auth.models import UserSocialAuth
+import django.contrib.auth
 
 AUTH_PROVIDERS = ['google', 'yahoo', 'linkedin', 'facebook']
 
@@ -50,3 +51,12 @@ def login(request):
                                  'auths': AUTH_PROVIDERS
                                 })
     return HttpResponse(t.render(c))
+
+@require_http_methods(['GET'])
+def logout(request):
+    django.contrib.auth.logout(request)
+    
+    t = loader.get_template('logout.html')
+    c = RequestContext(request, {})
+    return HttpResponse(t.render(c))
+

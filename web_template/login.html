@@ -2,33 +2,16 @@
 
 {% block title %}FreeBSD Community Portal :: Login{% endblock %}
 
-{% block head %}
-<style type="text/css">
-ul {
-	display: inline;
-}
-
-ul li {
-	list-style: none;
-	display: inline;
-	padding-right: 3px;
-}
-
-#content {
-	margin: 0 auto;
-	width: 720px;
-	text-align: center;
-}
-
-</style>
-{% endblock %}
+{% block head %}{% endblock %}
 
 {% block content %}
-<h2>Choose an authentication method:</h2>
-<ul>
-{% for x in auths %}
-	<li><a href="/login/{{ x }}"><img src="{{ STATIC_URL }}{{ x }}.png" alt="{{ x|capfirst }}" /></a></li>
-{% endfor %}
-</ul>
+<div class="centerbox">
+	<h2>Choose an authentication method:</h2>
+	<ul id="auth">
+	{% for x in auths %}
+		<li><a href="/login/{{ x }}"><img src="{{ STATIC_URL }}{{ x }}.png" alt="{{ x|capfirst }}" /></a></li>
+	{% endfor %}
+	</ul>
+</div>
 
 {% endblock %}
