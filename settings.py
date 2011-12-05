@@ -126,6 +126,8 @@ INSTALLED_APPS = (
     'fBSD_Portal.portal'
 )
 
+AUTH_PROFILE_MODULE = 'portal.CommPortalProfile'
+
 AUTHENTICATION_BACKENDS = (
     'social_auth.backends.twitter.TwitterBackend',
     'social_auth.backends.facebook.FacebookBackend',

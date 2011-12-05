@@ -1,5 +1,9 @@
 {% extends "base.html" %}
 
+{% block sidebar %}
+{% include "login_bar.html" %}
+{% endblock %}
+
 {% block content %}
 <h3>User data:</h3>
 
@@ -11,5 +15,13 @@
 	<tr class="odd"><th>Last name:</th> <td>{{ user.last_name|default:"Not provided" }}</td></tr>
 	<tr class="even"><th>Last login backend:</th> <td>{{ last_login }}</td></tr>
 	<tr class="odd"><th>Extra data:</th> <td>{{ extra_data|default:"None" }}</td></tr>
+</table>
+<p />
+<table>
+	<tr class="odd"><th>Interests:</th> <td>{{ user_profile.interests|default:"None entered." }}</td></tr>
+	<tr class="even"><th>About me:</th> <td>{{ user_profile.about_me|default:"None entered."}}</td></tr>
+	<tr class="odd"><th>When I'm Free:</th> <td>{{ user_profile.free_time|default:"None entered." }}</td></tr>
+	<tr class="even"><th>Hobbies:</th> <td>{{ user_profile.hobbies|default:"None entered." }}</td></tr>
+	<tr class="odd"><th>Tags:</th> <td>{{ user_profile.tags|default:"None entered." }}</td></tr>
 </table>
 {% endblock %}

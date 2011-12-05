@@ -24,5 +24,23 @@
 # SUCH DAMAGE.
 
 from django.db import models
+from django.contrib.auth.models import User
+from django.db.models.signals import post_save
+from django.dispatch import receiver
 
-# Create your models here.
+class CommPortalProfile(models.Model):
+    user = models.ForeignKey(User, unique=True)
+    interests = models.TextField(blank=True)
+    about_me = models.TextField(blank=True)
+    free_time = models.CharField(max_length=255, blank=True)
+    hobbies = models.TextField(blank=True)
+    tags = models.CharField(max_length=255, blank=True)
+    
+    def __unicode__(self):
+        return self.interests + self.about_me + self.free_time + self.hobbies + self.tags
+
+@receiver(post_save, sender=User)
+def CommPortalProfileCreate(sender, **kwargs):
+    if kwargs['created']:
+        CommPortalProfile.objects.create(user=kwargs['instance'])
+    
