@@ -19,6 +19,37 @@ body {
 	width: 100%;
 }
 
+#messages {
+	position: absolute;
+	top: 20px;
+	z-index: 1;
+	
+	margin-left: -250px;
+	left: 50%;
+	width: 500px;
+	
+	text-align: center;
+}
+#messages > div {
+	width: 100%;
+}
+
+#messages > div > div {
+	padding: 3px;
+	margin: 6px auto;
+	
+	display: inline-block;
+
+	font-weight: bold;
+	
+	-moz-border-radius: 3px;
+	border-radius: 3px;
+}
+
+.msg-success { color: #2e3436; background-color: #8ae234; border: #73d216 3px solid; }
+.msg-warning { color: #2e3436; background-color: #fce94f; border: #edd400 3px solid; }
+.msg-error { color: #eeeeec; background-color: #ef2929; border: #cc0000 3px solid; }
+
 #sidebar {
 	position: absolute;
 	top: 0;
@@ -29,7 +60,7 @@ body {
 	
 	-moz-border-radius: 3px;
 	border-radius: 3px;
-	background-color: #ffdb70;
+	background-color: #fce94f;
 }
 
 .centerbox {

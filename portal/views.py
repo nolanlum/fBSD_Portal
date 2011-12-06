@@ -25,6 +25,7 @@
 
 from django.template import RequestContext
 from django.shortcuts import render_to_response, get_object_or_404, Http404
+from django.contrib import messages
 
 from fBSD_Portal.portal.models import CommPortalProfile
 from social_auth.models import UserSocialAuth
@@ -98,6 +99,8 @@ def user(request, id):
         for x in PROFILE_FIELDS:
             setattr(prof, x[1], "" if request.POST[x[1]] == "None entered." else request.POST[x[1]] )
         prof.save()
+        
+        messages.success(request, "Your profile information has been saved!")
 
     # Fill stuff with stuff.
     for x in d['user_fields']:
