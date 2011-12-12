@@ -1,1 +1,6 @@
-Hello, <a href="{% url portal.views.user user.id %}">{{ user.first_name }}</a>! (<a href="{% url portal.views.logout %}">logout</a>)
+Hello,
+<a href="{% url portal.views.user user.id %}">{{ user.first_name }}</a>!
+{% if new_msgs %}
+(<a href="{% url portal.views.my_msgs %}">{{ new_msgs }} new message{{ new_msgs_suffix }}</a>)
+{% endif %}
+(<a href="{% url portal.views.logout %}">logout</a>)

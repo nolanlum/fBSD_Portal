@@ -24,13 +24,13 @@
 # SUCH DAMAGE.
 
 from django.template import RequestContext
-from django.shortcuts import render_to_response, get_object_or_404, Http404
+from django.shortcuts import render_to_response, get_object_or_404, Http404, redirect
 from django.contrib import messages
 
-from fBSD_Portal.portal.models import CommPortalProfile
+from fBSD_Portal.portal.models import CommPortalProfile, CommPortalPrivMsg, CommPortalPMForm
 from social_auth.models import UserSocialAuth
 
-from django.views.decorators.http import require_http_methods
+from django.views.decorators.http import require_http_methods 
 from django.views.decorators.csrf import csrf_protect
 from django.contrib.auth.decorators import login_required
 
@@ -95,7 +95,7 @@ def user(request, id):
         raise Http404("User doesn't have a profile! Bug?")
 
     # If we can edit, and there is POSTDATA, update the profile.
-    if request.POST and d['can_edit']:
+    if request.method == 'POST' and d['can_edit']:
         for x in PROFILE_FIELDS:
             setattr(prof, x[1], "" if request.POST[x[1]] == "None entered." else request.POST[x[1]] )
         prof.save()
@@ -108,3 +108,44 @@ def user(request, id):
 
     # Render.
     return render_to_response('user.html', d, RequestContext(request))
+
+@require_http_methods(['GET', 'POST'])
+@login_required
+@csrf_protect
+def send_msg(request, to_user):
+    to_user_ob = get_object_or_404(django.contrib.auth.models.User, pk=to_user)
+    
+    if request.method == 'POST':
+        form = CommPortalPMForm(request.POST)
+        if form.is_valid():
+            message = form.save(commit=False)
+            message.user_from = request.user
+            message.user_to = to_user_ob
+            message.save()
+            
+            messages.success(request, "Your message has been sent!")
+            return redirect('/')
+    else:
+        form = CommPortalPMForm()
+    
+    d = {
+         'form' : form,
+         'to_user' : to_user_ob
+        }
+    
+    return render_to_response('privmsg.html', d, RequestContext(request))
+
+@require_http_methods(['GET'])
+@login_required
+def my_msgs(request, id=None):
+    if id == None:
+        msgs = CommPortalPrivMsg.objects.filter(user_to=request.user)
+        d = { 'msgs' : msgs }
+        return render_to_response('mymessages.html', d, RequestContext(request))
+    else:
+        msg = get_object_or_404(CommPortalPrivMsg, pk=id)
+        msg.read = True
+        msg.save()
+        
+        d = { 'msg' : msg }
+        return render_to_response('show_privmsg.html', d, RequestContext(request))

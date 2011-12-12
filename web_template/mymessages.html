@@ -1,0 +1,39 @@
+{% extends "auth_base.html" %}
+
+{% block title %}FreeBSD Community Portal :: Private Messages{% endblock %}
+
+{% block head %}
+<style type="text/css">
+table {
+	padding: 4px;
+	width: 100%;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="centerbox" style="margin-top: -225px; margin-left: -360px; height: 450px; width: 720px;">
+	<h3>Private Messages</h3>
+	
+{% if not msgs %}
+	<h4>You have no private messages.</h4>
+{% else %}
+	<div style="overflow: auto; height: 380px;">
+		<table>
+			<tr id="pm-header">
+				<td width="10%">New?</td>
+				<td width="30%">From</td>
+				<td width="60%">Subject</td>
+			</tr>
+{% for msg in msgs %}
+			<tr class="{% cycle 'pm-row1' 'pm-row2' %}">
+				<td>{% if not msg.read %}<span style="background-color: #cc0000;">&emsp;</span>{% endif %}</td>
+				<td><a href="{% url portal.views.user msg.user_from.pk %}">{{ msg.user_from.first_name }} {{ msg.user_from.last_name }}</a></td>
+				<td><a href="{% url portal.views.my_msgs msg.pk %}">{{ msg.subject }}</a></td> 
+			</tr>
+{% endfor %}
+		</table>
+	</div>
+{% endif %}
+</div>
+{% endblock %}

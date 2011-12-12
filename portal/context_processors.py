@@ -23,17 +23,10 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 
-from django.conf.urls.defaults import patterns, url
-
-urlpatterns = patterns('portal.views',
-    url(r'^$', 'index'),
+def privmsgcount(request):
+    if not hasattr(request, 'new_msgs'): return {}
     
-    url(r'^user/(?P<id>\d+)$', 'user'),
-    url(r'^msg/(?P<to_user>\d+)$', 'send_msg'),
-    
-    url(r'^my_msg$', 'my_msgs'),
-    url(r'^my_msg/(?P<id>\d+)$', 'my_msgs'),
-    
-    url(r'^accounts/login/?$', 'login'),
-    url(r'^accounts/logout/?$', 'logout'),
-)
+    return {
+            'new_msgs' : request.new_msgs,
+            'new_msgs_suffix' : '' if request.new_msgs == 1 else 's' 
+            }

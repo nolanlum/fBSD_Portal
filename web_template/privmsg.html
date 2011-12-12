@@ -1,0 +1,27 @@
+{% extends "auth_base.html" %}
+
+{% block title %}FreeBSD Community Portal :: Send Private Message{% endblock %}
+
+{% block head %}
+<style type="text/css">
+textarea {
+	width: 85%;
+	height: 20em;
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="centerbox" style="margin-top: -225px; margin-left: -360px; height: 450px; width: 720px;">
+	<h3>
+		Sending message to: {{ to_user.first_name|default:"FreeBSD" }} {{ to_user.last_name|default:"User" }}
+	</h3>
+	
+	<form action="{% url portal.views.send_msg to_user.id %}" method="POST">
+		{% csrf_token %}
+		{{ form.as_p }}
+		
+		<input type="submit" value="Save Changes"></input>
+	</form>
+</div>
+{% endblock %}

@@ -23,17 +23,23 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 
-from django.conf.urls.defaults import patterns, url
+from fBSD_Portal.portal.models import CommPortalPrivMsg
+from django.contrib import messages
+from django.db.models import Count
 
-urlpatterns = patterns('portal.views',
-    url(r'^$', 'index'),
+class PrivMsgMiddleware(object):
+    def process_view(self, request, view_func, view_args, view_kwargs):
+        if not request.user.is_authenticated():
+            return None
+
+        mymsg = CommPortalPrivMsg.objects.filter(user_to=request.user)
+        n_notif = mymsg.filter(notified=False).aggregate(count=Count('notified'))
+        new = mymsg.filter(read=False).aggregate(count=Count('read'))
+
+        if n_notif['count']:
+            messages.warning(request, "You have %s new private message%s!" % (new['count'], '' if new['count'] == 1 else 's'))
+            
+            mymsg.filter(notified=False).update(notified=True)
+        
+        request.new_msgs = new['count']
     
-    url(r'^user/(?P<id>\d+)$', 'user'),
-    url(r'^msg/(?P<to_user>\d+)$', 'send_msg'),
-    
-    url(r'^my_msg$', 'my_msgs'),
-    url(r'^my_msg/(?P<id>\d+)$', 'my_msgs'),
-    
-    url(r'^accounts/login/?$', 'login'),
-    url(r'^accounts/logout/?$', 'logout'),
-)

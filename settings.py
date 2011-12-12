@@ -29,8 +29,10 @@ from os.path import abspath, dirname, basename, join
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
+# Don't touch these.
 ROOT_PATH = abspath(dirname(__file__))
 PROJECT_NAME = basename(ROOT_PATH)
+# End don't touch these.
 
 ADMINS = (
     ('N Lum', 'nol888@gmail.com')
@@ -40,20 +42,32 @@ MANAGERS = ADMINS
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3', # Add 'postgresql_psycopg2', 'postgresql', 'mysql', 'sqlite3' or 'oracle'.
-        'NAME': join(ROOT_PATH, 'sqlite.db'),   # Or path to database file if using sqlite3.
-        'USER': '',                      # Not used with sqlite3.
-        'PASSWORD': '',                  # Not used with sqlite3.
-        'HOST': '',                      # Set to empty string for localhost. Not used with sqlite3.
-        'PORT': '',                      # Set to empty string for default. Not used with sqlite3.
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': join(ROOT_PATH, 'sqlite.db'),
+        'USER': '', 'PASSWORD': '', 'HOST': '', 'PORT': ''
     }
 }
+
+FACEBOOK_APP_ID              = '199624726787942'
+FACEBOOK_API_SECRET          = '22ba69397ea5b462b963cbab4d41a9f0'
+FACEBOOK_EXTENDED_PERMISSIONS= ['email']
+GOOGLE_OAUTH2_CLIENT_ID      = '658227067660.apps.googleusercontent.com'
+GOOGLE_OAUTH2_CLIENT_SECRET  = '0VlDIC_GaOi8B-n_WFmTR6E-'
+GOOGLE_OAUTH_EXTRA_SCOPE     = ['https://www.googleapis.com/auth/userinfo.profile']
+LINKEDIN_CONSUMER_KEY        = '4n1683p54hc3'
+LINKEDIN_CONSUMER_SECRET     = 'gBv1cJM2CqYiw2LY'
+LINKEDIN_EXTRA_FIELD_SELECTORS=['']
 
 TIME_ZONE = 'America/New_York'
 LANGUAGE_CODE = 'en-us'
 
+SECRET_KEY = 't53xqy+s_p6_ynce#y$hr75_1_)g+%f^v6aczhf%20a8lm8_ps'
+
 SITE_ID = 1
 
+#######################
+# DON'T MODIFY BELOW
+#######################
 USE_I18N = True
 USE_L10N = True
 
@@ -66,47 +80,36 @@ MEDIA_ROOT = ''
 # Examples: "http://media.lawrence.com/media/", "http://example.com/media/"
 MEDIA_URL = ''
 
-# Absolute path to the directory static files should be collected to.
-# Don't put anything in this directory yourself; store your static files
-# in apps' "static/" subdirectories and in STATICFILES_DIRS.
-# Example: "/home/media/media.lawrence.com/static/"
 STATIC_ROOT = join(ROOT_PATH, 'web_static/')
-
-# URL prefix for static files.
-# Example: "http://media.lawrence.com/static/"
 STATIC_URL = '/static/'
 
-# URL prefix for admin static files -- CSS, JavaScript and images.
-# Make sure to use a trailing slash.
-# Examples: "http://foo.com/static/admin/", "/static/admin/".
 ADMIN_MEDIA_PREFIX = '/static/admin/'
 
-# Additional locations of static files
-STATICFILES_DIRS = (
-)
-
-# List of finder classes that know how to find static files in
-# various locations.
 STATICFILES_FINDERS = (
     'django.contrib.staticfiles.finders.FileSystemFinder',
-    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
-#    'django.contrib.staticfiles.finders.DefaultStorageFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder'
 )
-
-# Make this unique, and don't share it with anybody.
-SECRET_KEY = 't53xqy+s_p6_ynce#y$hr75_1_)g+%f^v6aczhf%20a8lm8_ps'
 
 TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
 )
-
 MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'fBSD_Portal.portal.middleware.PrivMsgMiddleware',
+)
+TEMPLATE_CONTEXT_PROCESSORS = (
+    'django.contrib.auth.context_processors.auth',
+    'django.core.context_processors.debug',
+    'django.core.context_processors.i18n',
+    'django.core.context_processors.media',
+    'django.core.context_processors.static',
+    'django.contrib.messages.context_processors.messages',
+    'fBSD_Portal.portal.context_processors.privmsgcount',
 )
 
 ROOT_URLCONF = 'fBSD_Portal.urls'
@@ -141,16 +144,6 @@ AUTHENTICATION_BACKENDS = (
     'social_auth.backends.contrib.livejournal.LiveJournalBackend',
     'django.contrib.auth.backends.ModelBackend',
 )
-
-FACEBOOK_APP_ID              = '199624726787942'
-FACEBOOK_API_SECRET          = '22ba69397ea5b462b963cbab4d41a9f0'
-FACEBOOK_EXTENDED_PERMISSIONS= ['email']
-GOOGLE_OAUTH2_CLIENT_ID      = '658227067660.apps.googleusercontent.com'
-GOOGLE_OAUTH2_CLIENT_SECRET  = '0VlDIC_GaOi8B-n_WFmTR6E-'
-GOOGLE_OAUTH_EXTRA_SCOPE     = ['https://www.googleapis.com/auth/userinfo.profile']
-LINKEDIN_CONSUMER_KEY        = '4n1683p54hc3'
-LINKEDIN_CONSUMER_SECRET     = 'gBv1cJM2CqYiw2LY'
-LINKEDIN_EXTRA_FIELD_SELECTORS=['']
 
 LOGIN_REDIRECT_URL           = '/'
 

@@ -108,3 +108,26 @@ ul#auth li a {
 #login-method {
 	font-weight: bold;
 }
+
+.msg-callout {
+	z-index: 1;
+	position: absolute;
+	right: 10px;
+	top: 20px;
+}
+
+ul.errorlist li {
+	list-style: none;
+	display: inline;
+	color: #eeeeec;
+	background-color: #ef2929;
+	border: #cc0000 3px solid;
+}
+
+#pm-header {
+	background-color: #babdb6;
+	font-weight: bold;
+}
+
+.pm-row1 { background-color: #d3d7cf; height: 2em; }
+.pm-row2 { background-color: #eeeeec; height: 2em; }

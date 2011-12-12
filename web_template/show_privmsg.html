@@ -1,0 +1,15 @@
+{% extends "auth_base.html" %}
+
+{% block title %}FreeBSD Community Portal :: Viewing Private Message{% endblock %}
+
+{% block content %}
+<div class="centerbox" style="margin-top: -225px; margin-left: -360px; height: 450px; width: 720px;">
+	<div style="padding: 0 15px; text-align: left;">
+		<h3>Message #{{ msg.pk }} from {{ msg.user_from.first_name }} {{ msg.user_from.last_name }}</h3>
+		
+		<h4>Subject: {{ msg.subject }}</h4>
+		
+		{{ msg.body|linebreaks }}
+	</div>
+</div>
+{% endblock %}

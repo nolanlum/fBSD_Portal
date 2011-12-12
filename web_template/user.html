@@ -1,8 +1,6 @@
-{% extends "base.html" %}
+{% extends "auth_base.html" %}
 
-{% block sidebar %}
-{% include "login_bar.html" %}
-{% endblock %}
+{% block title %}FreeBSD Community Portal :: View User Details{% endblock %}
 
 {% block head %}
 <style type="text/css">
@@ -27,6 +25,7 @@ textarea {
 		User: {{ view_user.first_name|default:"FreeBSD" }} {{ view_user.last_name|default:"User" }}{% if can_edit %}<br />
 		<span style="font-size: small;">Last logged in via: {{ last_login }}</span>{% endif %}</h3> 
 	<h4></h4>
+	<div class="msg-callout"><a href="{% url portal.views.send_msg view_user.pk %}">Message this user</a></div>
 	
 	{% if can_edit %}
 	<form action="{% url portal.views.user user.id %}" method="POST">

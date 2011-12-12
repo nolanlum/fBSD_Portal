@@ -23,6 +23,7 @@
 # OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF
 # SUCH DAMAGE.
 
+from django import forms
 from django.db import models
 from django.contrib.auth.models import User
 from django.db.models.signals import post_save
@@ -43,4 +44,23 @@ class CommPortalProfile(models.Model):
 def CommPortalProfileCreate(sender, **kwargs):
     if kwargs['created']:
         CommPortalProfile.objects.create(user=kwargs['instance'])
+    
+class CommPortalPrivMsg(models.Model):
+    user_from = models.ForeignKey(User, related_name='from')
+    user_to = models.ForeignKey(User, related_name='to')
+    subject = models.CharField(max_length=255)
+    body = models.TextField()
+    read = models.BooleanField(default=False)
+    notified = models.BooleanField(default=False)
+    
+    def __unicode__(self):
+        return "%s: %s" % (self.subject, self.body)
+
+class CommPortalPMForm(forms.ModelForm):
+    class Meta:
+        model = CommPortalPrivMsg
+        fields = ('subject', 'body')
+        widgets = {
+                   'subject' : forms.TextInput(attrs={'size' : 80, 'maxlength' : 255})
+                  }
     
